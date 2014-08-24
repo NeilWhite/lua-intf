@@ -52,7 +52,8 @@ public:
      * @param table the table reference (no auto unref)
      * @param key the table key reference (it will be unref automatically)
      */
-    constexpr LuaTableRef(lua_State* state, int table, int key)
+    //constexpr 
+    LuaTableRef(lua_State* state, int table, int key)
         : L(state)
         , m_table(table)
         , m_key(key)
@@ -146,7 +147,8 @@ public:
     /**
      * Create empty LuaTableIterator, it must be assigned to other LuaTableIterator before using
      */
-    constexpr LuaTableIterator()
+    //constexpr 
+    LuaTableIterator()
         : L(nullptr)
         , m_table(LUA_NOREF)
         , m_key(LUA_NOREF)
@@ -375,7 +377,8 @@ public:
     /**
      * Create empty reference
      */
-    constexpr LuaRef()
+    //constexpr 
+    LuaRef()
         : L(nullptr)
         , m_ref(LUA_NOREF)
         {}

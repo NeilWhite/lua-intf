@@ -328,8 +328,8 @@ private:
 template <typename T>
 struct CppObjectTraits
 {
-    static constexpr bool IsSharedPtr = false;
-    static constexpr bool IsSharedConst = false;
+    static const bool IsSharedPtr = false;
+    static const bool IsSharedConst = false;
     typedef T ObjectType;
 };
 
@@ -445,9 +445,9 @@ struct LuaCppObject
     typedef T ValueType;
     typedef typename CppObjectTraits<T>::ObjectType ObjectType;
 
-    static constexpr bool IsShared = CppObjectTraits<T>::IsSharedPtr;
-    static constexpr bool IsRef = IsShared ? true : IS_REF;
-    static constexpr bool IsConst = IsShared ? CppObjectTraits<T>::IsSharedConst : IS_CONST;
+    static const bool IsShared = CppObjectTraits<T>::IsSharedPtr;
+    static const bool IsRef = IsShared ? true : IS_REF;
+    static const bool IsConst = IsShared ? CppObjectTraits<T>::IsSharedConst : IS_CONST;
 
     static void push(lua_State* L, const T& t)
     {
@@ -484,15 +484,15 @@ struct LuaType <T const&> : LuaCppObject <T, true, true> {};
     template <typename T> \
     struct CppObjectTraits <SP<T>> \
     { \
-        static constexpr bool IsSharedPtr = true; \
-        static constexpr bool IsSharedConst = false; \
+        static const bool IsSharedPtr = true; \
+        static const bool IsSharedConst = false; \
         typedef T ObjectType; \
     }; \
     \
     template <typename T> \
     struct CppObjectTraits <SP<T const>> \
     { \
-        static constexpr bool IsSharedPtr = true; \
-        static constexpr bool IsSharedConst = true; \
+        static const bool IsSharedPtr = true; \
+        static const bool IsSharedConst = true; \
         typedef T ObjectType; \
     };

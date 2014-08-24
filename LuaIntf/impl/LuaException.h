@@ -27,7 +27,7 @@
 class LuaException : public std::exception
 {
 public:
-    explicit LuaException(lua_State* L) noexcept
+    explicit LuaException(lua_State* L) 
     {
         if (lua_gettop(L) > 0) {
             m_what = lua_tostring(L, -1);
@@ -36,15 +36,15 @@ public:
         }
     }
 
-    explicit LuaException(const char* msg) noexcept
+    explicit LuaException(const char* msg) 
         : m_what(msg)
         {}
 
-    explicit LuaException(const std::string& msg) noexcept
+    explicit LuaException(const std::string& msg) 
         : m_what(msg)
         {}
 
-    const char* what() const noexcept
+    const char* what() const
     {
         return m_what.c_str();
     }

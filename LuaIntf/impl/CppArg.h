@@ -58,24 +58,24 @@ struct CppArgTraits
 {
     typedef T Type;
     typedef typename LuaType<T>::ValueType ValueType;
-    static constexpr bool IsInput = true;
-    static constexpr bool IsOutput = false;
-    static constexpr bool IsOptonal = false;
-    static constexpr bool IsDefault = false;
+    static const bool IsInput = true;
+    static const bool IsOutput = false;
+    static const bool IsOptonal = false;
+    static const bool IsDefault = false;
 };
 
 template <typename T>
 struct CppArgTraits <_opt<T>> : CppArgTraits <T>
 {
-    static constexpr bool IsOptonal = true;
+    static const bool IsOptonal = true;
 };
 
 template <typename T, T DEF>
 struct CppArgTraits <_def<T, DEF>> : CppArgTraits <T>
 {
-    static constexpr bool IsOptonal = true;
-    static constexpr bool IsDefault = true;
-    static constexpr T DefaultValue = DEF;
+    static const bool IsOptonal = true;
+    static const bool IsDefault = true;
+    static const T DefaultValue = DEF;
 };
 
 template <typename T>
@@ -83,8 +83,8 @@ struct CppArgTraits <_out<T>> : CppArgTraits <T>
 {
     static_assert(!std::is_const<T>::value && std::is_lvalue_reference<T>::value,
         "argument with out spec must be non-const reference type");
-    static constexpr bool IsInput = false;
-    static constexpr bool IsOutput = true;
+    static const bool IsInput = false;
+    static const bool IsOutput = true;
 };
 
 template <typename T>
@@ -92,7 +92,7 @@ struct CppArgTraits <_ref<T>> : CppArgTraits <T>
 {
     static_assert(!std::is_const<T>::value && std::is_lvalue_reference<T>::value,
         "argument with ref spec must be non-const reference type");
-    static constexpr bool IsOutput = true;
+    static const bool IsOutput = true;
 };
 
 template <typename T>
@@ -100,8 +100,8 @@ struct CppArgTraits <_ref_opt<T>> : CppArgTraits <T>
 {
     static_assert(!std::is_const<T>::value && std::is_lvalue_reference<T>::value,
         "argument with ref spec must be non-const reference type");
-    static constexpr bool IsOptonal = true;
-    static constexpr bool IsOutput = true;
+    static const bool IsOptonal = true;
+    static const bool IsOutput = true;
 };
 
 template <typename T, T DEF>
@@ -109,10 +109,10 @@ struct CppArgTraits <_ref_def<T, DEF>> : CppArgTraits <T>
 {
     static_assert(!std::is_const<T>::value && std::is_lvalue_reference<T>::value,
         "argument with ref spec must be non-const reference type");
-    static constexpr bool IsOptonal = true;
-    static constexpr bool IsOutput = true;
-    static constexpr bool IsDefault = true;
-    static constexpr T DefaultValue = DEF;
+    static const bool IsOptonal = true;
+    static const bool IsOutput = true;
+    static const bool IsDefault = true;
+    static const T DefaultValue = DEF;
 };
 
 template <>
@@ -120,10 +120,10 @@ struct CppArgTraits <lua_State*>
 {
     typedef lua_State* Type;
     typedef lua_State* ValueType;
-    static constexpr bool IsInput = false;
-    static constexpr bool IsOutput = false;
-    static constexpr bool IsOptonal = false;
-    static constexpr bool IsDefault = false;
+    static const bool IsInput = false;
+    static const bool IsOutput = false;
+    static const bool IsOptonal = false;
+    static const bool IsDefault = false;
 };
 
 template <>
@@ -131,10 +131,10 @@ struct CppArgTraits <LuaState>
 {
     typedef LuaState Type;
     typedef LuaState ValueType;
-    static constexpr bool IsInput = false;
-    static constexpr bool IsOutput = false;
-    static constexpr bool IsOptonal = false;
-    static constexpr bool IsDefault = false;
+    static const bool IsInput = false;
+    static const bool IsOutput = false;
+    static const bool IsOptonal = false;
+    static const bool IsDefault = false;
 };
 
 //---------------------------------------------------------------------------
@@ -229,8 +229,8 @@ template <>
 struct CppArg <lua_State*>
 {
     typedef CppArgTraits<lua_State*> Traits;
-    typedef typename Traits::Type Type;
-    typedef typename Traits::ValueType ValueType;
+    typedef Traits::Type Type;
+    typedef Traits::ValueType ValueType;
 
     static int get(lua_State* L, int, lua_State*& r)
     {
@@ -248,8 +248,8 @@ template <>
 struct CppArg <LuaState>
 {
     typedef CppArgTraits<LuaState> Traits;
-    typedef typename Traits::Type Type;
-    typedef typename Traits::ValueType ValueType;
+    typedef Traits::Type Type;
+    typedef Traits::ValueType ValueType;
 
     static int get(lua_State* L, int, LuaState& r)
     {
