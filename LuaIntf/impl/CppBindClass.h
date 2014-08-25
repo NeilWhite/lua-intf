@@ -179,7 +179,7 @@ template <typename T, typename TF, typename R, typename... A, typename... P, int
 struct CppBindClassMethod <T, R(TF::*)(A...), _arg(*)(P...), CHK>
     : CppBindClassMethodBase <CHK, T, false, false, R(T::*)(A...), R, P...>
 {
-    static_assert(std::is_base_of<T, TF>::value, "class type and member function does not match");
+    static_assert(std::is_base_of<TF, T>::value, "class type and member function does not match");
     static_assert(sizeof...(A) == sizeof...(P), "the number of arguments and argument-specs do not match");
 };
 
@@ -187,7 +187,7 @@ template <typename T, typename TF, typename R, typename... A, typename... P, int
 struct CppBindClassMethod <T, R(TF::*)(A...) const, _arg(*)(P...), CHK>
     : CppBindClassMethodBase <CHK, T, false, true, R(T::*)(A...) const, R, P...>
 {
-    static_assert(std::is_base_of<T, TF>::value, "class type and member function does not match");
+    static_assert(std::is_base_of<TF, T>::value, "class type and member function does not match");
     static_assert(sizeof...(A) == sizeof...(P), "the number of arguments and argument-specs do not match");
 };
 
@@ -195,7 +195,7 @@ template <typename T, typename TF, typename R, typename... A, typename... P, int
 struct CppBindClassMethod <T, R(*)(TF*, A...), _arg(*)(P...), CHK>
     : CppBindClassMethodBase <CHK, T, true, false, R(*)(T*, A...), R, P...>
 {
-    static_assert(std::is_base_of<T, TF>::value, "class type and function argument type does not match");
+    static_assert(std::is_base_of<TF, T>::value, "class type and function argument type does not match");
     static_assert(sizeof...(A) == sizeof...(P), "the number of arguments and argument-specs do not match");
 };
 
@@ -203,7 +203,7 @@ template <typename T, typename TF, typename R, typename... A, typename... P, int
 struct CppBindClassMethod <T, R(*)(const TF*, A...), _arg(*)(P...), CHK>
     : CppBindClassMethodBase <CHK, T, true, true, R(*)(const T*, A...), R, P...>
 {
-    static_assert(std::is_base_of<T, TF>::value, "class type and function argument type does not match");
+    static_assert(std::is_base_of<TF, T>::value, "class type and function argument type does not match");
     static_assert(sizeof...(A) == sizeof...(P), "the number of arguments and argument-specs do not match");
 };
 
@@ -211,7 +211,7 @@ template <typename T, typename TF, typename R, typename... A, typename... P, int
 struct CppBindClassMethod <T, std::function<R(TF*, A...)>, _arg(*)(P...), CHK>
     : CppBindClassMethodBase <CHK, T, true, false, std::function<R(T*, A...)>, R, P...>
 {
-    static_assert(std::is_base_of<T, TF>::value, "class type and function argument type does not match");
+    static_assert(std::is_base_of<TF, T>::value, "class type and function argument type does not match");
     static_assert(sizeof...(A) == sizeof...(P), "the number of arguments and argument-specs do not match");
 };
 
@@ -219,7 +219,7 @@ template <typename T, typename TF, typename R, typename... A, typename... P, int
 struct CppBindClassMethod <T, std::function<R(const TF*, A...)>, _arg(*)(P...), CHK>
     : CppBindClassMethodBase <CHK, T, true, true, std::function<R(const T*, A...)>, R, P...>
 {
-    static_assert(std::is_base_of<T, TF>::value, "class type and function argument type does not match");
+    static_assert(std::is_base_of<TF, T>::value, "class type and function argument type does not match");
     static_assert(sizeof...(A) == sizeof...(P), "the number of arguments and argument-specs do not match");
 };
 
